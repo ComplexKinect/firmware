@@ -13,7 +13,11 @@ void loop() {
   Wire.beginTransmission(9); // transmit to device #9
   Wire.write(x);              // sends x 
   Wire.endTransmission();    // stop transmitting
-
+  /*
+  x++; // Increment x
+  if (x > 5) x = 0; // `reset x once it gets 6
+  delay(500);
+  */
   // Read Serial Data
   if(Serial.available() > 0) {
     data = Serial.read();
@@ -21,19 +25,19 @@ void loop() {
   }
 
   // Decide which node to trigger
-  if(val == 11) {
+  if(val == 1) {
     Wire.beginTransmission(9);
     x = 1;
     Wire.write(x);
     Wire.endTransmission();
-  } else if(val == 21) {
+  } else if(val == 2) {
     Wire.beginTransmission(9);
     x = 2;
     Wire.write(x);
     Wire.endTransmission();
-  } else if(val == 31) {
+  } else if(val == 3) {
     Wire.beginTransmission(9);
-    x = 2;
+    x = 3;
     Wire.write(x);
     Wire.endTransmission();
   }

@@ -12,6 +12,6 @@ void loop() {
   Serial.println(x);
   Wire.endTransmission();    // stop transmitting
   x++; // Increment x
-  if (x > 5) x = 0; // `reset x once it gets 6
+  if (x > 5) x = 0; // reset x once it gets 6
   delay(500);
 }

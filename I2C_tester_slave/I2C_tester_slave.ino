@@ -1,19 +1,9 @@
+// Include the required Wire library for I2C<br>
 #include <Wire.h>
-#include <Servo.h>
-
 int LED = 8;
 int x = 0;
-
-Servo testServo;
-int pos = 0;
-
 void setup() {
-  // Begin Serial to print debug
   Serial.begin(9600);
-
-  // Attach a servo
-  testServo.attach(9);
-  
   // Define the LED pin as Output
   pinMode (LED, OUTPUT);
   // Start the I2C Bus as Slave on address 9
@@ -23,10 +13,9 @@ void setup() {
 }
 void receiveEvent(int bytes) {
   x = Wire.read();    // read one character from the I2C
-  Serial.println(x);
 }
 void loop() {
-  /*
+  Serial.println(x);
   //If value received is 0 blink LED for 200 ms
   if (x == 0) {
     digitalWrite(LED, HIGH);
@@ -40,18 +29,5 @@ void loop() {
     delay(400);
     digitalWrite(LED, LOW);
     delay(400);
-  }
-  */
-
-  if (x == 5) {
-    for (pos = 0; pos <= 180; pos += 1) { // goes from 0 degrees to 180 degrees
-      // in steps of 1 degree
-      testServo.write(pos);              // tell servo to go to position in variable 'pos'
-      delay(15);                       // waits 15ms for the servo to reach the position
-    }
-    for (pos = 180; pos >= 0; pos -= 1) { // goes from 180 degrees to 0 degrees
-      testServo.write(pos);              // tell servo to go to position in variable 'pos'
-      delay(15);                       // waits 15ms for the servo to reach the position
-    }
   }
 }

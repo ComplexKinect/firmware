@@ -15,8 +15,8 @@ void setup() {
 
   // Attach a servo
   S1.attach(9);
-  S1.attach(10);
-  S1.attach(12);
+  S2.attach(10);
+  S3.attach(12);
   
   // Define the LED pin as Output
   pinMode (LED, OUTPUT);
@@ -30,16 +30,9 @@ void receiveEvent(int bytes) {
 }
 void loop() {
 
-  Serial.println(x);
+  Serial.println(x);    // DEBUG
 
-/*
-  if(x == 2){
-    digitalWrite(LED, HIGH);
-    delay(100);
-    digitalWrite(LED, LOW);
-    delay(100);
-  }
-*/
+  /* ----- Rotate servos ----- */
   if (x == 1) {
     for (pos = 0; pos <= 60; pos += 1) { // goes from 0 degrees to 180 degrees
       // in steps of 1 degree

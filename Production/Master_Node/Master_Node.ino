@@ -41,4 +41,6 @@ void loop() {
     Wire.write(x);
     Wire.endTransmission();
   }
+  val = 0;
+  x = 0;
 }

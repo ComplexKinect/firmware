@@ -1,1 +1,1 @@
-# frimware
+# firmware

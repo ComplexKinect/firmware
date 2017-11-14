@@ -10,14 +10,10 @@ void setup() {
   pinMode(8, OUTPUT);
 }
 void loop() {
-  Wire.beginTransmission(9); // transmit to device #9
-  Wire.write(x);              // sends x 
-  Wire.endTransmission();    // stop transmitting
-  /*
-  x++; // Increment x
-  if (x > 5) x = 0; // `reset x once it gets 6
-  delay(500);
-  */
+  //Wire.beginTransmission(9); // transmit to device #9
+  //Wire.write(x);              // sends x 
+  //Wire.endTransmission();    // stop transmitting
+
   // Read Serial Data
   if(Serial.available() > 0) {
     data = Serial.read();
@@ -26,9 +22,15 @@ void loop() {
 
 
   // Send command over I2C
-  Wire.beginTransmission(9);
-  Wire.write(val);
-  Wire.endTransmission();
+  
+  if(val == 1 || val == 2 || val == 3 || val == 4 || val == 5 || val == 6 || val == 7)
+  {
+    Wire.beginTransmission(9);
+    x = val;
+    Wire.write(x);
+    Wire.endTransmission();
+  }
+  
 
   /*
   // Decide which node to trigger

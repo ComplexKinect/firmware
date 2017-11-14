@@ -24,6 +24,13 @@ void loop() {
     val = int(data);
   }
 
+
+  // Send command over I2C
+  Wire.beginTransmission(9);
+  Wire.write(val);
+  Wire.endTransmission();
+
+  /*
   // Decide which node to trigger
   if(val == 11) {
     Wire.beginTransmission(9);
@@ -41,6 +48,7 @@ void loop() {
     Wire.write(x);
     Wire.endTransmission();
   }
+  */
   val = 0;
   x = 0;
 }

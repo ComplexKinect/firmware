@@ -10,9 +10,9 @@ void setup() {
   pinMode(8, OUTPUT);
 }
 void loop() {
-  //Wire.beginTransmission(9); // transmit to device #9
-  //Wire.write(x);              // sends x 
-  //Wire.endTransmission();    // stop transmitting
+  Wire.beginTransmission(9); // transmit to device #9
+  Wire.write(x);              // sends x 
+  Wire.endTransmission();    // stop transmitting
 
   // Read Serial Data
   if(Serial.available() > 0) {
@@ -23,7 +23,7 @@ void loop() {
 
   // Send command over I2C
   
-  if(val == 1 || val == 2 || val == 3 || val == 4 || val == 5 || val == 6 || val == 7)
+  if(val == 1 || val == 2 || val == 3 || val == 4 || val == 5 || val == 6 || val == 7 || val == 11)
   {
     Wire.beginTransmission(9);
     x = val;

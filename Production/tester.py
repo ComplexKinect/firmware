@@ -8,4 +8,4 @@ while True:
     for i in range(1,4):
         print(i)
         cxn.write([i])
-        time.sleep(1)
+        time.sleep(2)

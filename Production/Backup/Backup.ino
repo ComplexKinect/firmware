@@ -14,14 +14,14 @@ Servo Servo2;
 Servo Servo3;
 
 // Servo Speeds
-int speed1 = 20;      // NEED TO CHANGE
-int speed2 = 20;      // NEED TO CHANGE
-int speed3 = 20;      // NEED TO CHANGE
+int speed1 = 68;      // NEED TO CHANGE
+int speed2 = 104;      // NEED TO CHANGE
+int speed3 = 50;      // NEED TO CHANGE
 
 // Servo Stops
-int stop1 = 90;       // NEED TO CHANGE
-int stop2 = 90;       // NEED TO CHANGE
-int stop3 = 90;       // NEED TO CHANGE
+int stop1 = 47.5;       // NEED TO CHANGE
+int stop2 = 84;       // NEED TO CHANGE
+int stop3 = 0;       // NEED TO CHANGE
 
 // Servo counter
 int s1 = 0;
@@ -36,9 +36,9 @@ void setup() {
   pinMode(8, OUTPUT);
 
   // Attach Servos
-  Servo1.attach(1);     // MIGHT NEED TO CHANGE PINS
-  Servo2.attach(2);
-  Servo3.attach(3);
+  Servo1.attach(4);     // MIGHT NEED TO CHANGE PINS
+  Servo2.attach(5);
+  Servo3.attach(7);
 
 }
 void loop() {
@@ -53,38 +53,51 @@ void loop() {
     Serial.println(val);
   }
 
-  x = val;  
+  x = val; 
+  Serial.println(x); 
 
   // Start servo drive based off incoming message
   if (x == 1) {
     s1 = clock_speed*motion_time;
     Serial.println(s1);
+    Servo1.attach(4);
     Servo1.write(speed1);
   } else if (x == 2) {
     s2 = clock_speed*motion_time;
+    Servo2.attach(5);
     Servo2.write(speed2);
   } else if (x == 3) {
     s3 = clock_speed*motion_time;
+    Servo3.attach(7);
     Servo3.write(speed3);
   } else if (x == 4) {
     s2 = clock_speed*motion_time;
     s3 = clock_speed*motion_time;
+    Servo2.attach(5);
+    Servo3.attach(7);
     Servo2.write(speed2);
     Servo3.write(speed3);
   } else if (x == 5) {
     s1 = clock_speed*motion_time;
     s3 = clock_speed*motion_time;
+    Servo1.attach(4);
+    Servo3.attach(7);
     Servo1.write(speed1);
     Servo3.write(speed3);
   } else if (x == 6) {
     s1 = clock_speed*motion_time;
     s2 = clock_speed*motion_time;
+    Servo1.attach(4);
+    Servo2.attach(5);
     Servo1.write(speed1);
     Servo2.write(speed2);
   } else if (x == 7) {
     s1 = clock_speed*motion_time;
     s2 = clock_speed*motion_time;
     s3 = clock_speed*motion_time;
+    Servo1.attach(4);
+    Servo2.attach(5);
+    Servo3.attach(7);
     Servo1.write(speed1);
     Servo2.write(speed2);
     Servo3.write(speed3);
@@ -99,19 +112,22 @@ void loop() {
     Serial.println(s1);
     s1 = s1 - decrement;
   } else {
-    Servo1.write(stop1);
+    //Servo1.write(stop1);
+    Servo1.detach();
     s1 = 0;
   }
   if (s2 > 0) {
     s2 = s2 - decrement;
   } else {
-    Servo2.write(stop2);
+    //Servo2.write(stop2);
+    Servo2.detach();
     s2 = 0;
   }
   if (s3 > 0) {
     s3 = s3 - decrement;
   } else {
-    Servo3.write(stop3);
+    //Servo3.write(stop3);
+    Servo3.detach();
     s3 = 0;
   }
   

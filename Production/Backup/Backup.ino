@@ -51,11 +51,6 @@ void setup() {
   Serial.begin(9600);
   pinMode(8, OUTPUT);     // Debug LED
 
-  // Attach Servos
-  //Servo2.attach(2);     // MIGHT NEED TO CHANGE PINS
-  //Servo2.attach(2);
-  //Servo3.attach(3);
-
 }
 void loop() {
   /* ----- Begin I2C ----- */

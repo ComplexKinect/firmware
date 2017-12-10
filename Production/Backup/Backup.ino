@@ -73,66 +73,88 @@ void loop() {
   Wire.write(x);              // sends x 
   Wire.endTransmission();    // stop transmitting
   /* ----- End I2C ----- */
-
+  
+  //char *buf = (char *)malloc(sizeof(int)*10);
+  
+  int ar[10];
+  
+  
   // Read Serial Data
-  if(Serial.available() > 0) {
-    data = Serial.read();
-    val = int(data);
-    Serial.println(val);
-  }
-
+  int bytes_read = 0;
+  while(bytes_read < 6) {
+    if(Serial.available() > 0) {
+      data = Serial.read();
+      int temp = int(data);
+      //Serial.println(temp);
+      ar[bytes_read] = temp;
+      bytes_read++;
+    }
+  } 
+  
+  
   x = val; 
-  Serial.println(x); 
+  
+  Serial.print(flag1);
+  Serial.print(", ");
+  Serial.print(flag2);
+  Serial.print(", ");
+  Serial.print(flag3);
+  Serial.print(", ");
+  Serial.print(flag4);
+  Serial.print(", ");
+  Serial.print(flag5);
+  Serial.print(", ");
+  Serial.println(flag6);
 
 
   /* ----- Start Servos ----- */
   // Servo 1 -->
-  if (x % 10 == 1) {
+  if (ar[0] == 1) {
     if(flag1 == 0) {
       s1 = 1;
       flag1 = 1;
+      Servo1.attach(1);
     }
-    Servo1.attach(1);
   }
   // Servo 2 -->
-  if ((x/10) % 10 == 1) {
+  if (ar[1] == 1) {
     if(flag1 == 0) {
       s2 = 1;
       flag2 = 1;
+      Servo2.attach(2);
     }
-    Servo2.attach(2);
   }
   // Servo 3 -->
-  if ((x/100) % 10 == 1) {
+  if (ar[2] == 1) {
     if(flag1 == 0) {
       s3 = 1;
       flag3 = 1;
+      Servo3.attach(3);
     }
-    Servo3.attach(3);
   }
   // Servo 4 -->
-  if ((x/1000) % 10 == 1) {
+  if (ar[3] == 1) {
     if(flag1 == 0) {
       s4 = 1;
       flag4 = 1;
+      Servo4.attach(4);
     }
-    Servo4.attach(4);
   }
   // Servo 5 -->
-  if ((x/10000) % 10 == 1) {
+  if (ar[4] == 1) {
     if(flag1 == 0) {
       s5 = 1;
       flag5 = 1;
+      Servo5.attach(5);
     }
-    Servo5.attach(5);
   }
   // Servo 6 -->
-  if ((x/100000) % 10 == 1) {
+  if (ar[5] == 1) {
     if(flag1 == 0) {
       s6 = 1;
       flag6 = 1;
+      Servo6.attach(6);
     }
-    Servo6.attach(6);
   }
 
   val = 0;  // Reset
@@ -143,7 +165,7 @@ void loop() {
 
   /* ----- Start Servos Moving ----- */
   // Servo 1 -->
-  if(flag1 = 1) {
+  if(flag1 == 1) {
     // Open flower
     if( s1 < 130 ) {
       Servo1.write(s1);
@@ -152,7 +174,7 @@ void loop() {
       Servo1.write(130);
       flag1 = 2;
     }
-  } elif(flag1 = 2) {
+  } else if(flag1 == 2) {
     // Close flower
     if( s1 > 0 ) {
       Servo1.write(s1);
@@ -163,7 +185,7 @@ void loop() {
     }
   }
   // Servo 2 -->
-  if(flag2 = 1) {
+  if(flag2 == 1) {
     // Open flower
     if( s2 < 130 ) {
       Servo2.write(s2);
@@ -172,7 +194,7 @@ void loop() {
       Servo2.write(130);
       flag2 = 2;
     }
-  } elif(flag2 = 2) {
+  } else if(flag2 == 2) {
     // Close flower
     if( s2 > 0 ) {
       Servo2.write(s2);
@@ -183,7 +205,7 @@ void loop() {
     }
   }
   // Servo 3 -->
-  if(flag3 = 1) {
+  if(flag3 == 1) {
     // Open flower
     if( s3 < 130 ) {
       Servo3.write(s3);
@@ -192,7 +214,7 @@ void loop() {
       Servo3.write(130);
       flag3 = 2;
     }
-  } elif(flag3 = 2) {
+  } else if(flag3 == 2) {
     // Close flower
     if( s3 > 0 ) {
       Servo3.write(s3);
@@ -203,7 +225,7 @@ void loop() {
     }
   }
   // Servo 4 -->
-  if(flag4 = 1) {
+  if(flag4 == 1) {
     // Open flower
     if( s4 < 130 ) {
       Servo4.write(s4);
@@ -212,7 +234,7 @@ void loop() {
       Servo4.write(130);
       flag4 = 2;
     }
-  } elif(flag4 = 2) {
+  } else if(flag4 == 2) {
     // Close flower
     if( s4 > 0 ) {
       Servo4.write(s4);
@@ -223,7 +245,7 @@ void loop() {
     }
   }
   // Servo 5 -->
-  if(flag5 = 1) {
+  if(flag5 == 1) {
     // Open flower
     if( s5 < 130 ) {
       Servo5.write(s5);
@@ -232,7 +254,7 @@ void loop() {
       Servo5.write(130);
       flag5 = 2;
     }
-  } elif(flag5 = 2) {
+  } else if(flag5 == 2) {
     // Close flower
     if( s5 > 0 ) {
       Servo5.write(s5);
@@ -243,7 +265,7 @@ void loop() {
     }
   }
   // Servo 6 -->
-  if(flag6 = 1) {
+  if(flag6 == 1) {
     // Open flower
     if( s6 < 130 ) {
       Servo6.write(s6);
@@ -252,7 +274,7 @@ void loop() {
       Servo6.write(130);
       flag6 = 2;
     }
-  } elif(flag6 = 2) {
+  } else if(flag6 == 2) {
     // Close flower
     if( s6 > 0 ) {
       Servo6.write(s6);

@@ -1,6 +1,8 @@
 #include <Wire.h>
 #include <Servo.h>
 
+unsigned long before = millis();
+
 
 /* ----- Globals ----- */
 int x = 0;
@@ -60,28 +62,42 @@ int s5 = 0;
 int s6 = 0;
 
 
+int ar[10];
+char buf[10];
+
+
 void setup() {
   // Start the I2C Bus as Master
   Wire.begin();
   Serial.begin(9600);
   pinMode(8, OUTPUT);     // Debug LED
-
+  //Serial.setTimeout(50);
 }
 void loop() {
   /* ----- Begin I2C ----- */
-  Wire.beginTransmission(9); // transmit to device #9
-  Wire.write(x);              // sends x 
-  Wire.endTransmission();    // stop transmitting
+  //Wire.beginTransmission(9); // transmit to device #9
+  //Wire.write(x);              // sends x 
+  //Wire.endTransmission();    // stop transmitting
   /* ----- End I2C ----- */
   
   //char *buf = (char *)malloc(sizeof(int)*10);
   
-  int ar[10];
+  ar[0] = 0;
+  ar[1] = 0;
+  buf[0] = 0;
+  buf[1] = 0;
   
+  Serial.setTimeout(50);
+  Serial.readBytes(buf, 2);
+  ar[0] = int(buf[0]);
+  ar[1] = int(buf[1]);
   
-  // Read Serial Data
-  int bytes_read = 0;
-  while(bytes_read < 6) {
+  Serial.println(ar[0]);
+  Serial.println(ar[1]);
+  
+   //Read Serial Data
+  /*int bytes_read = 0;
+  while(bytes_read < 2) {
     if(Serial.available() > 0) {
       data = Serial.read();
       int temp = int(data);
@@ -89,8 +105,11 @@ void loop() {
       ar[bytes_read] = temp;
       bytes_read++;
     }
-  } 
+  } */
   
+  
+  Serial.print("T1: ");
+  Serial.println(millis() - before);
   
   x = val; 
   
@@ -107,53 +126,54 @@ void loop() {
   Serial.println(flag6);
 
 
+
   /* ----- Start Servos ----- */
   // Servo 1 -->
-  if (ar[0] == 1) {
+  if (ar[1] % 10 == 1) {
     if(flag1 == 0) {
       s1 = 1;
       flag1 = 1;
-      Servo1.attach(1);
+      Servo1.attach(2);
     }
   }
   // Servo 2 -->
-  if (ar[1] == 1) {
-    if(flag1 == 0) {
+  if ((ar[1]/10) % 10 == 1) {
+    if(flag2 == 0) {
       s2 = 1;
       flag2 = 1;
-      Servo2.attach(2);
+      Servo2.attach(3);
     }
   }
   // Servo 3 -->
-  if (ar[2] == 1) {
-    if(flag1 == 0) {
+  if ((ar[1]/100) % 10 == 1) {
+    if(flag3 == 0) {
       s3 = 1;
       flag3 = 1;
-      Servo3.attach(3);
+      Servo3.attach(4);
     }
   }
   // Servo 4 -->
-  if (ar[3] == 1) {
-    if(flag1 == 0) {
+  if (ar[0] % 10 == 1) {
+    if(flag4 == 0) {
       s4 = 1;
       flag4 = 1;
-      Servo4.attach(4);
+      Servo4.attach(5);
     }
   }
   // Servo 5 -->
-  if (ar[4] == 1) {
-    if(flag1 == 0) {
+  if ((ar[0]/10) % 10 == 1) {
+    if(flag5 == 0) {
       s5 = 1;
       flag5 = 1;
-      Servo5.attach(5);
+      Servo5.attach(6);
     }
   }
   // Servo 6 -->
-  if (ar[5] == 1) {
-    if(flag1 == 0) {
+  if ((ar[0]/100) % 10 == 1) {
+    if(flag6 == 0) {
       s6 = 1;
       flag6 = 1;
-      Servo6.attach(6);
+      Servo6.attach(7);
     }
   }
 
@@ -169,7 +189,7 @@ void loop() {
     // Open flower
     if( s1 < 130 ) {
       Servo1.write(s1);
-      s1 = s1 + 1;
+      s1 = s1 + 10;
     } else {
       Servo1.write(130);
       flag1 = 2;
@@ -178,7 +198,7 @@ void loop() {
     // Close flower
     if( s1 > 0 ) {
       Servo1.write(s1);
-      s1 = s1 - 1;
+      s1 = s1 - 10;
     } else {
       Servo1.write(0);
       flag1 = 0;
@@ -189,7 +209,7 @@ void loop() {
     // Open flower
     if( s2 < 130 ) {
       Servo2.write(s2);
-      s2 = s2 + 1;
+      s2 = s2 + 10;
     } else {
       Servo2.write(130);
       flag2 = 2;
@@ -198,7 +218,7 @@ void loop() {
     // Close flower
     if( s2 > 0 ) {
       Servo2.write(s2);
-      s2 = s2 - 1;
+      s2 = s2 - 10;
     } else {
       Servo2.write(0);
       flag2 = 0;
@@ -209,7 +229,7 @@ void loop() {
     // Open flower
     if( s3 < 130 ) {
       Servo3.write(s3);
-      s3 = s3 + 1;
+      s3 = s3 + 10;
     } else {
       Servo3.write(130);
       flag3 = 2;
@@ -218,7 +238,7 @@ void loop() {
     // Close flower
     if( s3 > 0 ) {
       Servo3.write(s3);
-      s3 = s3 - 1;
+      s3 = s3 - 10;
     } else {
       Servo3.write(0);
       flag3 = 0;
@@ -229,7 +249,7 @@ void loop() {
     // Open flower
     if( s4 < 130 ) {
       Servo4.write(s4);
-      s4 = s4 + 1;
+      s4 = s4 + 10;
     } else {
       Servo4.write(130);
       flag4 = 2;
@@ -238,7 +258,7 @@ void loop() {
     // Close flower
     if( s4 > 0 ) {
       Servo4.write(s4);
-      s4 = s4 - 1;
+      s4 = s4 - 10;
     } else {
       Servo4.write(0);
       flag4 = 0;
@@ -249,7 +269,7 @@ void loop() {
     // Open flower
     if( s5 < 130 ) {
       Servo5.write(s5);
-      s5 = s5 + 1;
+      s5 = s5 + 10;
     } else {
       Servo5.write(130);
       flag5 = 2;
@@ -258,7 +278,7 @@ void loop() {
     // Close flower
     if( s5 > 0 ) {
       Servo5.write(s5);
-      s5 = s5 - 1;
+      s5 = s5 - 10;
     } else {
       Servo5.write(0);
       flag5 = 0;
@@ -269,7 +289,7 @@ void loop() {
     // Open flower
     if( s6 < 130 ) {
       Servo6.write(s6);
-      s6 = s6 + 1;
+      s6 = s6 + 10;
     } else {
       Servo6.write(130);
       flag6 = 2;
@@ -278,14 +298,16 @@ void loop() {
     // Close flower
     if( s6 > 0 ) {
       Servo6.write(s6);
-      s6 = s6 - 1;
+      s6 = s6 - 10;
     } else {
       Servo6.write(0);
       flag6 = 0;
     }
   }
+  
+  Serial.print("TIME ELAPSED: ");
+  Serial.println(millis() - before);
 
-  delay(15);
   /* ----- End Servos Moving ----- */
   
 }
